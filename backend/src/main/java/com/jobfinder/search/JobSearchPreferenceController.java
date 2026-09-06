@@ -1,6 +1,6 @@
 package com.jobfinder.search;
 
-import com.jobfinder.auth.CustomOAuth2User;
+import com.jobfinder.auth.AppUserPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +52,7 @@ public class JobSearchPreferenceController {
     }
 
     private UUID getUserId(Authentication authentication) {
-        CustomOAuth2User principal = (CustomOAuth2User) authentication.getPrincipal();
+        AppUserPrincipal principal = (AppUserPrincipal) authentication.getPrincipal();
         return principal.getUser().getId();
     }
 }

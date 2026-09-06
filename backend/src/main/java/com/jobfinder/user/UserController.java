@@ -1,6 +1,6 @@
 package com.jobfinder.user;
 
-import com.jobfinder.auth.CustomOAuth2User;
+import com.jobfinder.auth.AppUserPrincipal;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -20,7 +20,7 @@ public class UserController {
     @GetMapping("/me")
     @Operation(summary = "Get current user profile")
     public ResponseEntity<UserDto> getMyProfile(Authentication authentication) {
-        CustomOAuth2User principal = (CustomOAuth2User) authentication.getPrincipal();
+        AppUserPrincipal principal = (AppUserPrincipal) authentication.getPrincipal();
         return ResponseEntity.ok(userService.toDto(principal.getUser()));
     }
 
@@ -29,7 +29,7 @@ public class UserController {
     public ResponseEntity<UserDto> updateMyProfile(
             @Valid @RequestBody UpdateUserRequest request,
             Authentication authentication) {
-        CustomOAuth2User principal = (CustomOAuth2User) authentication.getPrincipal();
+        AppUserPrincipal principal = (AppUserPrincipal) authentication.getPrincipal();
         User updated = userService.updateProfile(principal.getUser().getId(), request);
         return ResponseEntity.ok(userService.toDto(updated));
     }

@@ -1,6 +1,6 @@
 package com.jobfinder.job;
 
-import com.jobfinder.auth.CustomOAuth2User;
+import com.jobfinder.auth.AppUserPrincipal;
 import com.jobfinder.common.PagedResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -84,7 +84,7 @@ public class JobController {
     }
 
     private UUID getUserId(Authentication authentication) {
-        CustomOAuth2User principal = (CustomOAuth2User) authentication.getPrincipal();
+        AppUserPrincipal principal = (AppUserPrincipal) authentication.getPrincipal();
         return principal.getUser().getId();
     }
 }

@@ -1,6 +1,6 @@
 package com.jobfinder.linkedin;
 
-import com.jobfinder.auth.CustomOAuth2User;
+import com.jobfinder.auth.AppUserPrincipal;
 import com.jobfinder.config.AppProperties;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -64,7 +64,7 @@ public class LinkedInController {
     }
 
     private UUID getUserId(Authentication authentication) {
-        CustomOAuth2User principal = (CustomOAuth2User) authentication.getPrincipal();
+        AppUserPrincipal principal = (AppUserPrincipal) authentication.getPrincipal();
         return principal.getUser().getId();
     }
 }

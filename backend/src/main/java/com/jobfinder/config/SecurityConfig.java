@@ -1,6 +1,7 @@
 package com.jobfinder.config;
 
 import com.jobfinder.auth.CustomOAuth2UserService;
+import com.jobfinder.auth.CustomOidcUserService;
 import com.jobfinder.auth.OAuth2AuthenticationFailureHandler;
 import com.jobfinder.auth.OAuth2AuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ import java.util.List;
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomOidcUserService customOidcUserService;
     private final OAuth2AuthenticationSuccessHandler successHandler;
     private final OAuth2AuthenticationFailureHandler failureHandler;
     private final AppProperties appProperties;
@@ -59,6 +61,7 @@ public class SecurityConfig {
             .oauth2Login(oauth2 -> oauth2
                 .userInfoEndpoint(userInfo -> userInfo
                     .userService(customOAuth2UserService)
+                    .oidcUserService(customOidcUserService)
                 )
                 .successHandler(successHandler)
                 .failureHandler(failureHandler)

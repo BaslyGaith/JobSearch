@@ -20,6 +20,7 @@ public class CustomOAuth2User implements OAuth2User, AppUserPrincipal {
     }
 
     @Override
+    @Override
     public User getUser() {
         return user;
     }

@@ -28,7 +28,7 @@ public class AuthController {
             return ResponseEntity.status(401).build();
         }
 
-        CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
+        AppUserPrincipal oAuth2User = (AppUserPrincipal) authentication.getPrincipal();
         UserDto dto = userService.toDto(oAuth2User.getUser());
         return ResponseEntity.ok(dto);
     }
