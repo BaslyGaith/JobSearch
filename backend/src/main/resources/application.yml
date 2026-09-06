@@ -65,7 +65,7 @@ management:
       show-details: when-authorized
 
 app:
-  frontend-url: ${FRONTEND_URL:http://localhost:5173}
+  frontend-url: ${APP_FRONTEND_URL:${FRONTEND_URL:http://localhost:5173}}
   linkedin:
     mock-mode: ${LINKEDIN_MOCK_MODE:true}
     client-id: ${LINKEDIN_CLIENT_ID:}
