@@ -1,0 +1,47 @@
+# ─── Environment / Secrets ────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ─── Java / Maven ─────────────────────────────────────────────────────────────
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+*.class
+*.log
+*.jar
+!**/test/**/*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+
+# ─── Node / Frontend ──────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/coverage/
+*.local
+
+# ─── IDEs ─────────────────────────────────────────────────────────────────────
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ─── Docker ───────────────────────────────────────────────────────────────────
+.docker/
+
+# ─── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+desktop.ini
