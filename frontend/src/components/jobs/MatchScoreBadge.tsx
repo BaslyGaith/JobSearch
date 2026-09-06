@@ -1,11 +1,13 @@
 import { clsx } from 'clsx'
 
 interface MatchScoreBadgeProps {
-  score: number
+  score?: number
   size?: 'sm' | 'md'
 }
 
 export function MatchScoreBadge({ score, size = 'md' }: MatchScoreBadgeProps) {
+  if (score === undefined || score === null) return null
+
   const color = score >= 85
     ? 'bg-green-100 text-green-700 ring-green-200'
     : score >= 70

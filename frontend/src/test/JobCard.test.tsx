@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { describe, it, expect, vi } from 'vitest'
@@ -24,7 +24,7 @@ const mockJob: JobOpportunity = {
   publicationDate: '2024-01-15',
   matchScore: 90,
   status: 'NEW',
-  isSaved: false,
+  saved: false,
   createdAt: '2024-01-15T10:00:00Z',
   updatedAt: '2024-01-15T10:00:00Z',
 }
@@ -60,7 +60,7 @@ describe('JobCard', () => {
 
   it('renders match score badge', () => {
     renderJobCard()
-    expect(screen.getByText('90%')).toBeInTheDocument()
+    expect(screen.getByText('90% match')).toBeInTheDocument()
   })
 
   it('renders View Job link', () => {
@@ -76,7 +76,7 @@ describe('JobCard', () => {
   })
 
   it('renders unsave button when saved', () => {
-    renderJobCard({ ...mockJob, isSaved: true })
-    expect(screen.getByTitle('Unsave job')).toBeInTheDocument()
+    renderJobCard({ ...mockJob, saved: true })
+    expect(screen.getByTitle('Remove from saved')).toBeInTheDocument()
   })
 })

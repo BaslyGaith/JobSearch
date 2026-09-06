@@ -31,7 +31,7 @@ function renderLoginPage(search = '') {
 describe('LoginPage', () => {
   it('renders login heading', () => {
     renderLoginPage()
-    expect(screen.getByText(/Welcome to JobFinder AI/i)).toBeInTheDocument()
+    expect(screen.getByText(/Welcome back/i)).toBeInTheDocument()
   })
 
   it('renders Google sign-in button', () => {
@@ -46,6 +46,6 @@ describe('LoginPage', () => {
 
   it('renders security note', () => {
     renderLoginPage()
-    expect(screen.getByText(/OAuth 2\.0/i)).toBeInTheDocument()
+    expect(screen.getByText(/never store your OAuth credentials/i)).toBeInTheDocument()
   })
 })

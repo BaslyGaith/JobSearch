@@ -44,7 +44,7 @@ export interface JobOpportunity {
   recruiterName?: string;
   recruiterEmail?: string;
   recruiterProfileUrl?: string;
-  matchScore: number;
+  matchScore?: number;
   status: JobStatus;
   saved: boolean;
   createdAt: string;

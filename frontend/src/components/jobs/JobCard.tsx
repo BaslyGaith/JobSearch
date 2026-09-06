@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { MapPin, Building2, Calendar, User, ExternalLink, Bookmark, BookmarkCheck, CheckCircle } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -22,7 +21,6 @@ const employmentTypeLabel: Record<string, string> = {
 export function JobCard({ job }: JobCardProps) {
   const toast = useToast()
   const queryClient = useQueryClient()
-  const [showStatusMenu, setShowStatusMenu] = useState(false)
 
   const invalidate = () => {
     queryClient.invalidateQueries({ queryKey: ['jobs'] })
@@ -30,7 +28,13 @@ export function JobCard({ job }: JobCardProps) {
   }
 
   const saveMutation = useMutation({
-    mutationFn: () => job.saved ? unsaveJob(job.id) : saveJob(job.id),
+    mutationFn: async () => {
+      if (job.saved) {
+        await unsaveJob(job.id)
+      } else {
+        await saveJob(job.id)
+      }
+    },
     onSuccess: () => {
       invalidate()
       toast.success(job.saved ? 'Job removed from saved' : 'Job saved successfully')
@@ -42,7 +46,6 @@ export function JobCard({ job }: JobCardProps) {
     mutationFn: (status: JobStatus) => updateJobStatus(job.id, status),
     onSuccess: () => {
       invalidate()
-      setShowStatusMenu(false)
       toast.success('Status updated')
     },
     onError: () => toast.error('Failed to update status'),

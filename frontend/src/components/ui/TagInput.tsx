@@ -1,6 +1,5 @@
 import { useState, useRef, KeyboardEvent } from 'react'
 import { X } from 'lucide-react'
-import { clsx } from 'clsx'
 
 interface TagInputProps {
   label?: string
@@ -37,7 +36,7 @@ export function TagInput({ label, placeholder, tags, onChange, suggestions = [],
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault()
-      addTag(inputValue)
+      addTag(inputValue.replace(/,+$/, ''))
     } else if (e.key === 'Backspace' && !inputValue && tags.length > 0) {
       removeTag(tags[tags.length - 1])
     }
@@ -58,6 +57,7 @@ export function TagInput({ label, placeholder, tags, onChange, suggestions = [],
             {tag}
             <button
               type="button"
+              title={`Remove ${tag}`}
               onClick={(e) => { e.stopPropagation(); removeTag(tag) }}
               className="hover:text-primary-600 transition-colors"
             >

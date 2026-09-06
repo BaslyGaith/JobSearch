@@ -39,7 +39,6 @@ export function JobsPage() {
     sortBy: 'newest',
   })
   const [searchInput, setSearchInput] = useState('')
-  const [filtersOpen, setFiltersOpen] = useState(false)
 
   const { data, isLoading } = useQuery({
     queryKey: ['jobs', filters],
