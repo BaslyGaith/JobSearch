@@ -3,8 +3,8 @@ import { LayoutDashboard, Briefcase, SlidersHorizontal, Linkedin, User, Zap, Fil
 import { clsx } from 'clsx'
 
 const navItems = [
-  { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-  { to: '/jobs', icon: Briefcase, label: 'Jobs' },
+  { to: '/today', icon: LayoutDashboard, label: 'Today' },
+  { to: '/jobs', icon: Briefcase, label: 'Opportunities' },
   { to: '/preferences', icon: SlidersHorizontal, label: 'Search Preferences' },
   { to: '/cv', icon: FileText, label: 'CV Studio' },
   { to: '/career', icon: BriefcaseBusiness, label: 'My Career' },
@@ -46,10 +46,12 @@ export function Sidebar() {
 
       {/* Footer */}
       <div className="px-4 py-4 border-t border-slate-200">
-        <div className="rounded-lg bg-primary-50 p-3">
-          <p className="text-xs font-semibold text-primary-700 mb-1">Sprint 1 — Foundation</p>
-          <p className="text-xs text-primary-600">AI agent coming in Sprint 2</p>
-        </div>
+        <NavLink
+          to="/profile"
+          className="text-xs text-slate-400 hover:text-slate-600 transition-colors"
+        >
+          Settings
+        </NavLink>
       </div>
     </aside>
   )

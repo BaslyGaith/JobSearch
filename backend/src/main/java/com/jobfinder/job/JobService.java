@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -44,6 +45,17 @@ public class JobService {
 
         Page<JobOpportunityDto> dtoPage = jobPage.map(job -> toDto(job, savedJobIds.contains(job.getId())));
         return PagedResponse.from(dtoPage);
+    }
+
+    /** The unreviewed opportunities worth looking at first, best match leading. */
+    @Transactional(readOnly = true)
+    public List<JobOpportunityDto> getWorthReviewing(UUID userId, int limit) {
+        Set<UUID> savedJobIds = savedJobRepository.findByUserId(userId)
+                .stream().map(s -> s.getJob().getId()).collect(Collectors.toSet());
+
+        return jobRepository.findWorthReviewing(PageRequest.of(0, limit)).stream()
+                .map(job -> toDto(job, savedJobIds.contains(job.getId())))
+                .toList();
     }
 
     @Transactional(readOnly = true)

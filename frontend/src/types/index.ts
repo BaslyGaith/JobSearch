@@ -246,3 +246,15 @@ export interface FactBank {
   skillTags: Record<string, string[]>;
   blocklist: string[];
 }
+
+/** What needs the user's attention right now. */
+export interface Today {
+  publishedToday: number;
+  awaitingReview: number;
+  strongMatches: number;
+  interested: number;
+  applied: number;
+  cvsPrepared: number;
+  linkedInConnected: boolean;
+  worthReviewing: JobOpportunity[];
+}

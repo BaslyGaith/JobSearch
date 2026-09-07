@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -38,4 +40,14 @@ public interface JobOpportunityRepository extends JpaRepository<JobOpportunity, 
 
     @Query("SELECT COUNT(j) FROM JobOpportunity j WHERE j.matchScore >= 85")
     long countHighMatches();
+
+    long countByPublicationDateGreaterThanEqual(LocalDate since);
+
+    /** Unreviewed opportunities worth a look first, best match at the top. */
+    @Query("""
+            SELECT j FROM JobOpportunity j
+            WHERE j.status = com.jobfinder.job.JobStatus.NEW
+            ORDER BY j.matchScore DESC NULLS LAST, j.publicationDate DESC
+            """)
+    List<JobOpportunity> findWorthReviewing(Pageable pageable);
 }

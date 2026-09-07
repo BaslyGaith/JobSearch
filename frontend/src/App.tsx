@@ -3,7 +3,7 @@ import { Layout } from './components/layout/Layout'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { LoginPage } from './pages/LoginPage'
 import { AuthCallbackPage } from './pages/AuthCallbackPage'
-import { DashboardPage } from './pages/DashboardPage'
+import { TodayPage } from './pages/TodayPage'
 import { JobsPage } from './pages/JobsPage'
 import { PreferencesPage } from './pages/PreferencesPage'
 import { CvPage } from './pages/CvPage'
@@ -22,7 +22,8 @@ export function App() {
       {/* Protected routes */}
       <Route element={<ProtectedRoute />}>
         <Route element={<Layout />}>
-          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/today" element={<TodayPage />} />
+          <Route path="/dashboard" element={<Navigate to="/today" replace />} />
           <Route path="/jobs" element={<JobsPage />} />
           <Route path="/preferences" element={<PreferencesPage />} />
           <Route path="/cv" element={<CvPage />} />
@@ -33,7 +34,7 @@ export function App() {
       </Route>
 
       {/* Redirects */}
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route path="/" element={<Navigate to="/today" replace />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )
