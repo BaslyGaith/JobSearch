@@ -98,6 +98,7 @@ public class CvService {
         JobOpportunity opportunity = jobOpportunityId == null ? null
                 : jobRepository.findById(jobOpportunityId).orElse(null);
 
+        UUID generationId = UUID.randomUUID();
         List<CvDocumentDto> produced = new ArrayList<>();
         for (String language : LANGUAGES) {
             GeneratedDraft generated = generateWithFallback(factBank, analysis, posting, language);
@@ -105,6 +106,8 @@ public class CvService {
             CvDocument saved = documentRepository.save(CvDocument.builder()
                     .user(profile.getUser())
                     .jobOpportunity(opportunity)
+                    .generationId(generationId)
+                    .title(analysis.getTargetRole())
                     .language(language)
                     .targetRole(analysis.getTargetRole())
                     .targetCompany(analysis.getTargetCompany())
@@ -170,6 +173,27 @@ public class CvService {
         return toDto(doc, readDraft(doc), readGaps(doc));
     }
 
+    /** Renames every language version of one CV at once. */
+    @Transactional
+    public void rename(UUID userId, UUID generationId, String title) {
+        List<CvDocument> documents = documentRepository.findByUserIdAndGenerationId(userId, generationId);
+        if (documents.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found");
+        }
+        documents.forEach(doc -> doc.setTitle(title));
+        documentRepository.saveAll(documents);
+    }
+
+    /** Deletes a CV and every language version of it. */
+    @Transactional
+    public void deleteGeneration(UUID userId, UUID generationId) {
+        List<CvDocument> documents = documentRepository.findByUserIdAndGenerationId(userId, generationId);
+        if (documents.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found");
+        }
+        documentRepository.deleteAll(documents);
+    }
+
     @Transactional
     public void delete(UUID userId, UUID id) {
         CvDocument doc = documentRepository.findByIdAndUserId(id, userId)
@@ -215,6 +239,8 @@ public class CvService {
     private CvDocumentDto toDto(CvDocument doc, CvDraft draft, List<PostingAnalysis.Requirement> gaps) {
         return CvDocumentDto.builder()
                 .id(doc.getId())
+                .generationId(doc.getGenerationId())
+                .title(doc.getTitle())
                 .language(doc.getLanguage())
                 .targetRole(doc.getTargetRole())
                 .targetCompany(doc.getTargetCompany())

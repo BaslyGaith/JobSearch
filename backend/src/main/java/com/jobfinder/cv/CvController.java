@@ -59,8 +59,25 @@ public class CvController {
         return ResponseEntity.ok(cvService.get(userId(authentication), id));
     }
 
+    @PutMapping("/generation/{generationId}/title")
+    @Operation(summary = "Rename a CV and all of its language versions")
+    public ResponseEntity<Void> rename(Authentication authentication,
+                                       @PathVariable UUID generationId,
+                                       @Valid @RequestBody RenameCvRequest request) {
+        cvService.rename(userId(authentication), generationId, request.getTitle());
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/generation/{generationId}")
+    @Operation(summary = "Delete a CV and all of its language versions")
+    public ResponseEntity<Void> deleteGeneration(Authentication authentication,
+                                                 @PathVariable UUID generationId) {
+        cvService.deleteGeneration(userId(authentication), generationId);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete a generated CV")
+    @Operation(summary = "Delete a single language version")
     public ResponseEntity<Void> delete(Authentication authentication, @PathVariable UUID id) {
         cvService.delete(userId(authentication), id);
         return ResponseEntity.noContent().build();

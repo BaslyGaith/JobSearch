@@ -2,12 +2,23 @@ import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { FileText, Download, Sparkles, AlertTriangle, Trash2, Clock } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
-import { deleteCv, downloadCv, generateCv, getCvProfile, listCvs } from '../api/cv'
+import { deleteCvGeneration, downloadCv, generateCv, getCvProfile, listCvs, renameCv } from '../api/cv'
 import { useToast } from '../contexts/ToastContext'
 import { CvPreview } from '../components/cv/CvPreview'
 import { EmptyState } from '../components/ui/EmptyState'
 import { Skeleton } from '../components/ui/Skeleton'
 import type { CvDocument, PostingRequirement } from '../types'
+
+/** One CV, holding each of its language versions. */
+interface CvGroup {
+  generationId: string
+  title: string
+  targetCompany?: string
+  jobFamily: string
+  accentColor: string
+  createdAt: string
+  documents: CvDocument[]
+}
 
 export function CvPage() {
   const toast = useToast()
@@ -16,6 +27,7 @@ export function CvPage() {
   const [posting, setPosting] = useState('')
   const [language, setLanguage] = useState<'en' | 'fr'>('en')
   const [current, setCurrent] = useState<CvDocument[] | null>(null)
+  const [renaming, setRenaming] = useState<string | null>(null)
 
   const { data: profile } = useQuery({ queryKey: ['cv', 'profile'], queryFn: getCvProfile })
   const { data: history, isLoading: historyLoading } = useQuery({
@@ -37,14 +49,45 @@ export function CvPage() {
     },
   })
 
-  const removal = useMutation({
-    mutationFn: (id: string) => deleteCv(id),
+  const removeGroup = useMutation({
+    mutationFn: (generationId: string) => deleteCvGeneration(generationId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cv', 'list'] })
       toast.success('CV deleted')
     },
     onError: () => toast.error('Could not delete that CV'),
   })
+
+  const rename = useMutation({
+    mutationFn: ({ generationId, title }: { generationId: string; title: string }) =>
+      renameCv(generationId, title),
+    onSuccess: () => {
+      setRenaming(null)
+      queryClient.invalidateQueries({ queryKey: ['cv', 'list'] })
+    },
+    onError: () => toast.error('Could not rename that CV'),
+  })
+
+  /** One card per CV, with its language versions grouped inside it. */
+  const groups: CvGroup[] = Object.values(
+    (history ?? []).reduce<Record<string, CvGroup>>((acc, doc) => {
+      const existing = acc[doc.generationId]
+      if (existing) {
+        existing.documents.push(doc)
+      } else {
+        acc[doc.generationId] = {
+          generationId: doc.generationId,
+          title: doc.title || doc.targetRole,
+          targetCompany: doc.targetCompany,
+          jobFamily: doc.jobFamily,
+          accentColor: doc.accentColor,
+          createdAt: doc.createdAt,
+          documents: [doc],
+        }
+      }
+      return acc
+    }, {})
+  ).sort((a, b) => b.createdAt.localeCompare(a.createdAt))
 
   const shown = current?.find((doc) => doc.language === language) ?? null
   const gaps: PostingRequirement[] = shown?.gaps ?? []
@@ -164,59 +207,91 @@ export function CvPage() {
         </section>
       )}
 
-      {/* History */}
-      <section className="card p-5">
-        <h2 className="font-semibold text-slate-900 mb-3">Previously generated</h2>
+      {/* My CVs - one card per CV, with its language versions inside */}
+      <section>
+        <h2 className="font-semibold text-slate-900 mb-3">My CVs</h2>
         {historyLoading ? (
-          <Skeleton className="h-20 w-full" />
-        ) : !history || history.length === 0 ? (
-          <EmptyState
-            icon={FileText}
-            title="No CVs yet"
-            description="Paste a posting above and the agent will write the first pair."
-          />
+          <Skeleton className="h-24 w-full" />
+        ) : groups.length === 0 ? (
+          <div className="card">
+            <EmptyState
+              icon={FileText}
+              title="No CVs yet"
+              description="Paste a posting above and the agent will write the first pair."
+            />
+          </div>
         ) : (
-          <ul className="divide-y divide-slate-100">
-            {history.map((doc) => (
-              <li key={doc.id} className="py-2.5 flex items-center justify-between gap-3">
-                <div className="min-w-0">
-                  <p className="text-sm font-medium text-slate-900 truncate">
-                    {doc.targetRole}
-                    <span className="badge bg-slate-100 text-slate-600 ml-2">
-                      {doc.language.toUpperCase()}
-                    </span>
-                  </p>
-                  <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
-                    <Clock className="w-3 h-3" />
-                    {formatDistanceToNow(new Date(doc.createdAt), { addSuffix: true })}
-                    {doc.targetCompany ? ` · ${doc.targetCompany}` : ''}
-                  </p>
-                </div>
-                <div className="flex items-center gap-1 shrink-0">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {groups.map((group) => (
+              <article key={group.generationId} className="card p-4 flex flex-col">
+                <div className="flex items-start justify-between gap-2">
+                  {renaming === group.generationId ? (
+                    <input
+                      autoFocus
+                      defaultValue={group.title}
+                      onBlur={(e) => rename.mutate({ generationId: group.generationId, title: e.target.value })}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') (e.target as HTMLInputElement).blur()
+                        if (e.key === 'Escape') setRenaming(null)
+                      }}
+                      className="flex-1 rounded border border-primary-400 px-2 py-1 text-sm outline-none"
+                    />
+                  ) : (
+                    <button
+                      onClick={() => setRenaming(group.generationId)}
+                      className="text-sm font-semibold text-slate-900 text-left hover:text-primary-700 truncate"
+                      title="Click to rename"
+                    >
+                      {group.title}
+                    </button>
+                  )}
                   <button
-                    onClick={() => { setCurrent([doc]); setLanguage(doc.language as 'en' | 'fr') }}
-                    className="btn-ghost text-xs px-2 py-1"
+                    onClick={() => removeGroup.mutate(group.generationId)}
+                    className="btn-ghost p-1 rounded text-slate-400 hover:text-red-600 shrink-0"
+                    title="Delete this CV"
                   >
-                    View
-                  </button>
-                  <button
-                    onClick={() => handleDownload(doc)}
-                    className="btn-ghost p-1.5 rounded-lg"
-                    title="Download .docx"
-                  >
-                    <Download className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => removal.mutate(doc.id)}
-                    className="btn-ghost p-1.5 rounded-lg text-slate-400 hover:text-red-600"
-                    title="Delete"
-                  >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
-              </li>
+
+                <p className="text-xs text-slate-400 flex items-center gap-1 mt-1">
+                  <Clock className="w-3 h-3" />
+                  {formatDistanceToNow(new Date(group.createdAt), { addSuffix: true })}
+                  {group.targetCompany ? ` · ${group.targetCompany}` : ''}
+                </p>
+
+                <span
+                  className="badge mt-2 self-start"
+                  style={{ backgroundColor: `${group.accentColor}1a`, color: group.accentColor }}
+                >
+                  {group.jobFamily}
+                </span>
+
+                <div className="mt-3 pt-3 border-t border-slate-100 space-y-1.5">
+                  {group.documents.map((doc) => (
+                    <div key={doc.id} className="flex items-center justify-between gap-2">
+                      <button
+                        onClick={() => {
+                          setCurrent(group.documents)
+                          setLanguage(doc.language as 'en' | 'fr')
+                        }}
+                        className="text-xs font-medium text-slate-600 hover:text-primary-700"
+                      >
+                        {doc.language === 'en' ? 'English' : 'Français'}
+                      </button>
+                      <button
+                        onClick={() => handleDownload(doc)}
+                        className="btn-ghost p-1 rounded"
+                        title="Download .docx"
+                      >
+                        <Download className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </article>
             ))}
-          </ul>
+          </div>
         )}
       </section>
     </div>

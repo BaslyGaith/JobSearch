@@ -13,4 +13,6 @@ public interface CvDocumentRepository extends JpaRepository<CvDocument, UUID> {
     Optional<CvDocument> findByIdAndUserId(UUID id, UUID userId);
 
     List<CvDocument> findByUserIdAndJobOpportunityIdOrderByCreatedAtDesc(UUID userId, UUID jobOpportunityId);
+
+    List<CvDocument> findByUserIdAndGenerationId(UUID userId, UUID generationId);
 }

@@ -36,6 +36,13 @@ public class CvDocument {
     @Column(nullable = false, length = 5)
     private String language;
 
+    /** Groups the language versions produced by one generate call. */
+    @Column(name = "generation_id", nullable = false)
+    private UUID generationId;
+
+    /** User-facing name, e.g. "Data Analyst - Berlin". Defaults to the target role. */
+    private String title;
+
     @Column(name = "target_role")
     private String targetRole;
 

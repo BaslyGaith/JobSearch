@@ -46,3 +46,11 @@ export const downloadCv = async (id: string, filename: string): Promise<void> =>
   link.remove()
   window.URL.revokeObjectURL(url)
 }
+
+export const renameCv = async (generationId: string, title: string): Promise<void> => {
+  await apiClient.put(`/api/cv/generation/${generationId}/title`, { title })
+}
+
+export const deleteCvGeneration = async (generationId: string): Promise<void> => {
+  await apiClient.delete(`/api/cv/generation/${generationId}`)
+}

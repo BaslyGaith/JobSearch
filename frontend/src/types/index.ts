@@ -172,6 +172,8 @@ export interface PostingAnalysis {
 }
 
 export interface CvDocument {
+  generationId: string;
+  title: string;
   id: string;
   language: string;
   targetRole: string;
@@ -187,4 +189,60 @@ export interface CvDocument {
 export interface CvGenerationResponse {
   analysis: PostingAnalysis;
   documents: CvDocument[];
+}
+
+export interface FactBankBullet {
+  text: string;
+  tags: string[];
+}
+
+export interface FactBankExperience {
+  title: string;
+  company: string;
+  companyNote?: string | null;
+  location?: string;
+  startDate: string;
+  endDate?: string | null;
+  bullets: FactBankBullet[];
+}
+
+export interface FactBankProject {
+  name: string;
+  organisation?: string;
+  dates?: string;
+  bullets: string[];
+  tags: string[];
+}
+
+export interface FactBankEducation {
+  qualification: string;
+  institution: string;
+  dates: string;
+}
+
+/** The verified facts a CV may be built from - nothing else can reach a CV. */
+export interface FactBank {
+  identity: {
+    fullName: string;
+    email: string;
+    alternateEmail?: string;
+    phone: string;
+    linkedin: string;
+    location: string;
+    yearsExperience: number;
+    languages: string[];
+  };
+  constraints: {
+    forbiddenTitleWords: string[];
+    allowedFigures: string[];
+    springBootAngularOnlyIn?: string;
+  };
+  experiences: FactBankExperience[];
+  projects: FactBankProject[];
+  education: FactBankEducation[];
+  academicProjects: string[];
+  certifications: string[];
+  skills: Record<string, string[]>;
+  skillTags: Record<string, string[]>;
+  blocklist: string[];
 }

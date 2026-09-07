@@ -12,6 +12,8 @@ import java.util.UUID;
 public class CvDocumentDto {
 
     private UUID id;
+    private UUID generationId;
+    private String title;
     private String language;
     private String targetRole;
     private String targetCompany;

@@ -7,6 +7,7 @@ import { DashboardPage } from './pages/DashboardPage'
 import { JobsPage } from './pages/JobsPage'
 import { PreferencesPage } from './pages/PreferencesPage'
 import { CvPage } from './pages/CvPage'
+import { CareerProfilePage } from './pages/CareerProfilePage'
 import { LinkedInPage } from './pages/LinkedInPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { NotFoundPage } from './pages/NotFoundPage'
@@ -25,6 +26,7 @@ export function App() {
           <Route path="/jobs" element={<JobsPage />} />
           <Route path="/preferences" element={<PreferencesPage />} />
           <Route path="/cv" element={<CvPage />} />
+          <Route path="/career" element={<CareerProfilePage />} />
           <Route path="/linkedin" element={<LinkedInPage />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
