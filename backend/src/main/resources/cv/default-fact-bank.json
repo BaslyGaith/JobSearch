@@ -1,0 +1,150 @@
+{
+  "identity": {
+    "fullName": "Mohamed Gaith Basly",
+    "email": "mgabasly@gmail.com",
+    "alternateEmail": "mohamedgaithb@gmail.com",
+    "phone": "+216 56 060 033",
+    "linkedin": "linkedin.com/in/mohamed-gaith-basly",
+    "location": "Tunis, Tunisia",
+    "yearsExperience": 4,
+    "languages": ["French (fluent)", "English (fluent)", "Arabic (native)"]
+  },
+  "constraints": {
+    "forbiddenTitleWords": ["Senior"],
+    "allowedFigures": [
+      "4 years of experience",
+      "15+ Power BI solutions delivered",
+      "6 modules",
+      "4 releases",
+      "12 Scrum sprints"
+    ],
+    "springBootAngularOnlyIn": "SIMEG"
+  },
+  "experiences": [
+    {
+      "title": "Analyst Developer",
+      "company": "Vermeg",
+      "companyNote": "banking & insurance software vendor",
+      "location": "Tunis",
+      "startDate": "2024-09",
+      "endDate": null,
+      "bullets": [
+        {"text": "Gathers and frames business requirements with product and operations teams, then designs and builds the corresponding solution: data model, semantic layer, reports, security roles.", "tags": ["business-analysis", "bi", "data-modelling"]},
+        {"text": "Administers Power BI Service: workspace structure, app publishing, deployment pipelines across Dev / Test / Prod, gateway configuration, refresh scheduling.", "tags": ["bi", "power-platform", "administration"]},
+        {"text": "Builds the data layer on Microsoft Fabric: Lakehouse ingestion, medallion architecture, Direct Lake semantic models feeding dashboards used in management reviews.", "tags": ["fabric", "data-engineering", "bi"]},
+        {"text": "Star-schema data modelling; performance tuning through query folding, aggregation tables, incremental refresh.", "tags": ["data-modelling", "performance", "bi"]},
+        {"text": "Owns role and permission design: defines which population accesses which data perimeter, implements it as security roles, validates before release.", "tags": ["security", "iam", "authorization"]},
+        {"text": "Escalation point for access and authorization requests from business users.", "tags": ["security", "iam", "support"]},
+        {"text": "Writes automated extraction and preparation jobs in Python and Java; REST API integration from operational sources.", "tags": ["python", "java", "etl", "integration"]},
+        {"text": "Participates in architecture reviews and argues technical trade-offs.", "tags": ["architecture"]},
+        {"text": "Agile / Scrum ceremonies; continuous delivery through GitLab CI.", "tags": ["agile", "cicd"]}
+      ]
+    },
+    {
+      "title": "IT Analyst",
+      "company": "Vermeg",
+      "companyNote": "banking & insurance software vendor",
+      "location": "Tunis",
+      "startDate": "2022-09",
+      "endDate": "2024-09",
+      "bullets": [
+        {"text": "Ran requirements workshops with business, operations and IT stakeholders; produced functional specifications, data models, KPI definitions; validated through user acceptance testing.", "tags": ["business-analysis", "agile"]},
+        {"text": "Delivered 15+ Power BI solutions across 12 Scrum sprints - DAX measures, Power Query transformations, static and dynamic row-level security - published to governed workspaces.", "tags": ["bi", "power-platform", "security"]},
+        {"text": "Built and maintained ETL pipelines; integrated internal ERP and CRM sources over REST APIs including HubSpot; data quality controls that measurably reduced recurring inconsistencies.", "tags": ["etl", "integration", "data-engineering"]},
+        {"text": "Administered Azure AD / Entra ID, SSO and Active Directory: user and group administration, role assignment, periodic permission reviews.", "tags": ["iam", "security", "identity"]},
+        {"text": "Applied fine-grained authorization: static and dynamic row-level security, object-level security, so each business scope was restricted to its own perimeter.", "tags": ["iam", "security", "authorization"]},
+        {"text": "Enforced data segregation between client perimeters - a contractual requirement in banking and insurance.", "tags": ["security", "banking"]},
+        {"text": "Administered Windows Server and VMware vSphere.", "tags": ["infrastructure"]},
+        {"text": "Java 8+ backend development on the Palmyra framework: PML model definition, xmlToJava code generation, Maven plugin automation (generation, Swagger, release) across a large banking and insurance software suite.", "tags": ["java", "backend", "banking"]},
+        {"text": "Build engineering with Maven and Tycho: OSGi bundles, Eclipse plugin packaging, p2 repositories, dependency and multi-environment configuration management.", "tags": ["java", "build", "backend"]},
+        {"text": "GitLab CI pipeline diagnostics and build-failure resolution; code quality with SonarQube.", "tags": ["cicd", "java", "quality"]},
+        {"text": "Automated functional testing with Playwright and Selenium, including test-data generation scripts; SQL validation on MySQL.", "tags": ["testing", "sql"]},
+        {"text": "First-level user support through Jira: incident triage, reproduction, SQL root-cause investigation, resolution or escalation, follow-up to closure, user training.", "tags": ["support", "sql"]}
+      ]
+    },
+    {
+      "title": "Data Analyst Intern (R&D)",
+      "company": "Tunisie Telecom",
+      "companyNote": null,
+      "location": "Tunis",
+      "startDate": "2022-02",
+      "endDate": "2022-09",
+      "bullets": [
+        {"text": "Customer upsell analytics pipeline on CRM and billing data; feature engineering in Python; predictive modelling with scikit-learn.", "tags": ["python", "data-science", "etl"]},
+        {"text": "Power BI dashboards tracking campaign KPIs and customer segment profitability.", "tags": ["bi"]}
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "SIMEG - integrated business platform (graduation project)",
+      "organisation": "ESPRIT / Vermeg",
+      "dates": "Jan 2025 - Jun 2026",
+      "bullets": [
+        "Six-module platform: CRM, HR, Finance, Inventory, Project Management, Reporting. 4 releases, 12 Scrum sprints.",
+        "Spring Boot backend, Angular frontend, REST APIs documented with Swagger / OpenAPI.",
+        "OAuth2 authentication via Google and Azure AD; role-based access per module.",
+        "Relational data model; embedded Power BI reporting module.",
+        "LLM assistant integration (Llama 3 / Groq API).",
+        "GitLab CI pipeline."
+      ],
+      "tags": ["java", "backend", "web", "fullstack", "agile", "bi"]
+    }
+  ],
+  "education": [
+    {"qualification": "Engineer's Degree, Software Engineering", "institution": "ESPRIT, Tunis", "dates": "Sep 2022 - Jul 2026"},
+    {"qualification": "Master in Computer Technology, Data Science", "institution": "ISET Nabeul", "dates": "Sep 2020 - Sep 2022"},
+    {"qualification": "Applied Bachelor, Industrial Computing & IoT", "institution": "ISTIC", "dates": "Sep 2017 - Jul 2020"}
+  ],
+  "academicProjects": [
+    "ISTIC graduation project at TES Medical: IoT-connected medical monitoring device - C/C++, Raspberry Pi, MQTT pipeline.",
+    "ISET Nabeul graduation project: upsell analytics pipeline - Python, scikit-learn, Power BI."
+  ],
+  "certifications": [
+    "Microsoft DP-600 Fabric Analytics Engineer",
+    "Microsoft DP-700 Fabric Data Engineer",
+    "Scrum Foundation Professional (CertiProf)"
+  ],
+  "skills": {
+    "BI & Power Platform": ["Power BI Desktop and Service", "DAX", "Power Query (M)", "workspaces", "apps", "deployment pipelines", "gateways"],
+    "Security & authorization": ["row-level security (static and dynamic)", "object-level security", "role design", "least privilege", "perimeter segregation"],
+    "Identity": ["Azure AD / Entra ID", "SSO", "Active Directory", "OAuth2", "permission reviews"],
+    "Microsoft Fabric": ["Lakehouse", "Direct Lake", "medallion architecture", "data pipelines", "semantic models"],
+    "Data modelling": ["star schema", "fact and dimension tables", "calculated columns", "incremental refresh", "query folding", "aggregation tables"],
+    "Databases": ["SQL", "MySQL", "SQL Server", "JDBC", "query optimisation"],
+    "Languages": ["Java 8+", "Python (Pandas, NumPy, scikit-learn)", "SQL", "TypeScript", "JavaScript", "HTML", "CSS", "C/C++ (academic level)"],
+    "Java ecosystem": ["Palmyra framework", "Maven", "Tycho", "OSGi", "Eclipse plugins", "Swagger/OpenAPI"],
+    "Web": ["Spring Boot", "Angular", "REST APIs"],
+    "Testing": ["Playwright", "Selenium", "automated functional testing", "SonarQube"],
+    "CI/CD & tooling": ["Git", "GitLab CI", "Jira"],
+    "Infrastructure": ["Windows Server", "VMware vSphere", "Microsoft 365"],
+    "ETL & integration": ["pipeline design", "REST API integration", "ERP and CRM sources (HubSpot)", "data quality controls"],
+    "Ways of working": ["Agile / Scrum", "requirements workshops", "functional specifications", "UAT", "L1 incident management", "user training", "cross-functional coordination"]
+  },
+  "skillTags": {
+    "BI & Power Platform": ["bi", "power-platform", "data"],
+    "Security & authorization": ["security", "iam", "authorization"],
+    "Identity": ["iam", "identity", "security"],
+    "Microsoft Fabric": ["fabric", "data-engineering", "data"],
+    "Data modelling": ["data-modelling", "data", "bi"],
+    "Databases": ["sql", "data", "backend"],
+    "Languages": ["java", "python", "backend", "web"],
+    "Java ecosystem": ["java", "backend", "build"],
+    "Web": ["web", "fullstack", "backend"],
+    "Testing": ["testing", "quality"],
+    "CI/CD & tooling": ["cicd", "agile"],
+    "Infrastructure": ["infrastructure"],
+    "ETL & integration": ["etl", "integration", "data-engineering"],
+    "Ways of working": ["agile", "business-analysis", "support"]
+  },
+  "blocklist": [
+    "JPA", "Hibernate", "Spring Data", "Spring Security", "@Transactional", "Mockito", "Nexus", "Java OCP",
+    "Docker", "Kubernetes", "Terraform", "AWS", "GCP",
+    "Snowflake", "dbt", "Airflow", "Databricks", "Teradata", "SAS", "Microsoft Purview", "Data Mesh", "PySpark", "DB2", "Kafka",
+    "Tableau", "Looker", "KQL", "OneLake Security",
+    "Power Apps", "Power Automate", "Dataverse",
+    "SailPoint", "Okta", "Saviynt", "CyberArk", "SAP GRC",
+    "Scala", "COBOL",
+    "Basel III", "IFRS 9", "SOX", "AML"
+  ]
+}

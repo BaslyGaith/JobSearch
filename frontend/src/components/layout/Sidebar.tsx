@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Briefcase, SlidersHorizontal, Linkedin, User, Zap } from 'lucide-react'
+import { LayoutDashboard, Briefcase, SlidersHorizontal, Linkedin, User, Zap, FileText } from 'lucide-react'
 import { clsx } from 'clsx'
 
 const navItems = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/jobs', icon: Briefcase, label: 'Jobs' },
   { to: '/preferences', icon: SlidersHorizontal, label: 'Search Preferences' },
+  { to: '/cv', icon: FileText, label: 'CV Agent' },
   { to: '/linkedin', icon: Linkedin, label: 'LinkedIn' },
   { to: '/profile', icon: User, label: 'Profile' },
 ]

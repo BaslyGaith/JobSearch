@@ -88,3 +88,103 @@ export interface ApiError {
   message: string;
   path: string;
 }
+
+// ---------------------------------------------------------------------------
+// CV agent
+// ---------------------------------------------------------------------------
+
+export interface CvProfile {
+  id: string;
+  fullName: string;
+  headline?: string;
+  email?: string;
+  phone?: string;
+  linkedinUrl?: string;
+  location?: string;
+  yearsExperience?: number;
+  /** The verified fact bank, as a JSON string. */
+  factBank: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface CvExperienceBlock {
+  title: string;
+  company: string;
+  companyNote?: string;
+  location?: string;
+  dates: string;
+  bullets: string[];
+}
+
+export interface CvValueBlock {
+  heading: string;
+  body: string;
+}
+
+export interface CvSkillLine {
+  label: string;
+  values: string;
+}
+
+export interface CvProjectBlock {
+  name: string;
+  organisation?: string;
+  dates?: string;
+  bullets: string[];
+}
+
+export interface CvEducationLine {
+  qualification: string;
+  institution: string;
+  dates: string;
+}
+
+export interface CvDraft {
+  language: string;
+  tagline: string;
+  profile: string;
+  experiences: CvExperienceBlock[];
+  whatIBring: CvValueBlock[];
+  coreSkills: CvSkillLine[];
+  selectedProject?: CvProjectBlock | null;
+  certifications: string[];
+  education: CvEducationLine[];
+  footer?: string;
+}
+
+export type Coverage = 'STRONG' | 'PARTIAL' | 'ABSENT';
+
+export interface PostingRequirement {
+  text: string;
+  essential: boolean;
+  coverage: Coverage;
+  interviewAdvice?: string;
+}
+
+export interface PostingAnalysis {
+  targetRole: string;
+  targetCompany?: string;
+  jobFamily: string;
+  accentColor: string;
+  requirements: PostingRequirement[];
+  tags: string[];
+}
+
+export interface CvDocument {
+  id: string;
+  language: string;
+  targetRole: string;
+  targetCompany?: string;
+  jobFamily: string;
+  accentColor: string;
+  generatedBy: string;
+  createdAt: string;
+  draft: CvDraft;
+  gaps: PostingRequirement[];
+}
+
+export interface CvGenerationResponse {
+  analysis: PostingAnalysis;
+  documents: CvDocument[];
+}

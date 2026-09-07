@@ -71,11 +71,6 @@ app:
     client-id: ${LINKEDIN_CLIENT_ID:}
     client-secret: ${LINKEDIN_CLIENT_SECRET:}
     redirect-uri: ${LINKEDIN_REDIRECT_URI:http://localhost:8080/api/linkedin/callback}
-  cv:
-    ollama:
-      enabled: ${CV_OLLAMA_ENABLED:true}
-      base-url: ${CV_OLLAMA_URL:http://localhost:11434}
-      model: ${CV_OLLAMA_MODEL:llama3}
 
 logging:
   level:

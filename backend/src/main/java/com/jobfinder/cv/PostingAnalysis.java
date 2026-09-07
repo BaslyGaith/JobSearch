@@ -1,0 +1,51 @@
+package com.jobfinder.cv;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * What a posting actually tests, and how each requirement maps onto the fact
+ * bank. Requirements that map to nothing become "gaps to know about" rather
+ * than quietly disappearing.
+ */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class PostingAnalysis {
+
+    private String targetRole;
+    private String targetCompany;
+    private String jobFamily;
+    private String accentColor;
+    @Builder.Default
+    private List<Requirement> requirements = new ArrayList<>();
+    /** Tags driving bullet selection, most important first. */
+    @Builder.Default
+    private List<String> tags = new ArrayList<>();
+
+    public enum Coverage { STRONG, PARTIAL, ABSENT }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Requirement {
+        private String text;
+        private boolean essential;
+        private Coverage coverage;
+        /** Set when coverage is ABSENT: how to handle it honestly in an interview. */
+        private String interviewAdvice;
+    }
+
+    public List<Requirement> gaps() {
+        return requirements.stream()
+                .filter(r -> r.getCoverage() == Coverage.ABSENT)
+                .toList();
+    }
+}
