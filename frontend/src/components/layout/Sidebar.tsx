@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Briefcase, SlidersHorizontal, Linkedin, User, Zap, FileText, BriefcaseBusiness } from 'lucide-react'
+import { LayoutDashboard, Briefcase, SlidersHorizontal, Linkedin, User, Zap, FileText, BriefcaseBusiness, Rss } from 'lucide-react'
 import { clsx } from 'clsx'
 
 const navItems = [
@@ -8,6 +8,7 @@ const navItems = [
   { to: '/preferences', icon: SlidersHorizontal, label: 'Search Preferences' },
   { to: '/cv', icon: FileText, label: 'CV Studio' },
   { to: '/career', icon: BriefcaseBusiness, label: 'My Career' },
+  { to: '/sources', icon: Rss, label: 'Sources' },
   { to: '/linkedin', icon: Linkedin, label: 'LinkedIn' },
   { to: '/profile', icon: User, label: 'Profile' },
 ]

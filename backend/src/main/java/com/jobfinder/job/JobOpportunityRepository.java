@@ -43,6 +43,12 @@ public interface JobOpportunityRepository extends JpaRepository<JobOpportunity, 
 
     long countByPublicationDateGreaterThanEqual(LocalDate since);
 
+    long countBySource(String source);
+
+    boolean existsByJobUrl(String jobUrl);
+
+    boolean existsByTitleIgnoreCaseAndCompanyNameIgnoreCase(String title, String companyName);
+
     /** Unreviewed opportunities worth a look first, best match at the top. */
     @Query("""
             SELECT j FROM JobOpportunity j

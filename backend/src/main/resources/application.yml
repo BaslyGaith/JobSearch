@@ -71,6 +71,17 @@ app:
     client-id: ${LINKEDIN_CLIENT_ID:}
     client-secret: ${LINKEDIN_CLIENT_SECRET:}
     redirect-uri: ${LINKEDIN_REDIRECT_URI:http://localhost:8080/api/linkedin/callback}
+  sources:
+    # Company career pages on Greenhouse / Lever expose public JSON feeds.
+    # List the board tokens you want followed, comma separated.
+    greenhouse:
+      boards: ${GREENHOUSE_BOARDS:}
+    lever:
+      companies: ${LEVER_COMPANIES:}
+    # France Travail "Offres d'emploi v2" - credentials from francetravail.io.
+    france-travail:
+      client-id: ${FRANCE_TRAVAIL_CLIENT_ID:}
+      client-secret: ${FRANCE_TRAVAIL_CLIENT_SECRET:}
   cv:
     ollama:
       enabled: ${CV_OLLAMA_ENABLED:true}

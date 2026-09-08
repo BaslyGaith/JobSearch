@@ -258,3 +258,16 @@ export interface Today {
   linkedInConnected: boolean;
   worthReviewing: JobOpportunity[];
 }
+
+export interface SourceStatus {
+  name: string;
+  enabled: boolean;
+  storedOpportunities: number;
+}
+
+export interface SyncResult {
+  added: number;
+  duplicates: number;
+  sourcesUsed: string[];
+  failures: string[];
+}
