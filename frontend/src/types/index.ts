@@ -271,3 +271,32 @@ export interface SyncResult {
   sourcesUsed: string[];
   failures: string[];
 }
+
+export type ApplicationStatus =
+  | 'DRAFT' | 'READY' | 'SENT' | 'FOLLOW_UP' | 'INTERVIEW' | 'REJECTED' | 'CLOSED';
+
+export interface ApplicationTimelineEntry {
+  label: string;
+  detail?: string;
+  occurredAt: string;
+}
+
+export interface Application {
+  id: string;
+  jobOpportunityId: string;
+  jobTitle: string;
+  companyName: string;
+  jobUrl?: string;
+  matchScore?: number;
+  cvDocumentId?: string;
+  cvTitle?: string;
+  cvLanguage?: string;
+  recipientName?: string;
+  recipientEmail?: string;
+  subject: string;
+  body: string;
+  status: ApplicationStatus;
+  sentAt?: string;
+  createdAt: string;
+  events: ApplicationTimelineEntry[];
+}

@@ -1,10 +1,12 @@
-import { MapPin, Building2, Calendar, User, ExternalLink, Bookmark, BookmarkCheck, CheckCircle } from 'lucide-react'
+import { MapPin, Building2, Calendar, User, ExternalLink, Bookmark, BookmarkCheck, CheckCircle, SendHorizontal } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { JobOpportunity, JobStatus } from '../../types'
 import { MatchScoreBadge } from './MatchScoreBadge'
 import { JobStatusBadge } from './JobStatusBadge'
 import { saveJob, unsaveJob, updateJobStatus } from '../../api/jobs'
+import { prepareApplication } from '../../api/applications'
+import { useNavigate } from 'react-router-dom'
 import { useToast } from '../../contexts/ToastContext'
 
 interface JobCardProps {
@@ -21,6 +23,7 @@ const employmentTypeLabel: Record<string, string> = {
 export function JobCard({ job }: JobCardProps) {
   const toast = useToast()
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
   const invalidate = () => {
     queryClient.invalidateQueries({ queryKey: ['jobs'] })
@@ -49,6 +52,17 @@ export function JobCard({ job }: JobCardProps) {
       toast.success('Status updated')
     },
     onError: () => toast.error('Failed to update status'),
+  })
+
+  /** Assembles the pack and takes the user to it - nothing is sent. */
+  const prepare = useMutation({
+    mutationFn: () => prepareApplication(job.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['applications'] })
+      toast.success('Application prepared for you to review')
+      navigate('/applications')
+    },
+    onError: () => toast.error('Could not prepare that application'),
   })
 
   const publicationDate = job.publicationDate
@@ -132,6 +146,16 @@ export function JobCard({ job }: JobCardProps) {
               <CheckCircle className="w-4 h-4" />
             </button>
           )}
+
+          {/* Prepare application */}
+          <button
+            onClick={() => prepare.mutate()}
+            disabled={prepare.isPending}
+            className="btn-ghost p-2 rounded-lg"
+            title="Prepare application"
+          >
+            <SendHorizontal className="w-4 h-4" />
+          </button>
 
           {/* View Job */}
           <a

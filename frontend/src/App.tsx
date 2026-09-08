@@ -9,6 +9,7 @@ import { PreferencesPage } from './pages/PreferencesPage'
 import { CvPage } from './pages/CvPage'
 import { CareerProfilePage } from './pages/CareerProfilePage'
 import { SourcesPage } from './pages/SourcesPage'
+import { ApplicationsPage } from './pages/ApplicationsPage'
 import { LinkedInPage } from './pages/LinkedInPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { NotFoundPage } from './pages/NotFoundPage'
@@ -30,6 +31,7 @@ export function App() {
           <Route path="/cv" element={<CvPage />} />
           <Route path="/career" element={<CareerProfilePage />} />
           <Route path="/sources" element={<SourcesPage />} />
+          <Route path="/applications" element={<ApplicationsPage />} />
           <Route path="/linkedin" element={<LinkedInPage />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Route>

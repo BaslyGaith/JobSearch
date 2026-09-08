@@ -194,6 +194,13 @@ public class CvService {
         documentRepository.deleteAll(documents);
     }
 
+    /** The stored CV entity, for callers that need to link to it. */
+    @Transactional(readOnly = true)
+    public CvDocument findDocument(UUID userId, UUID id) {
+        return documentRepository.findByIdAndUserId(id, userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found"));
+    }
+
     @Transactional
     public void delete(UUID userId, UUID id) {
         CvDocument doc = documentRepository.findByIdAndUserId(id, userId)
